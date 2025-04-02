@@ -3,7 +3,7 @@ from arpeggio.cleanpeg import ParserPEG
 
 
 peg = '''
-    sentence  = adjective noun verb adjective noun EOF
+    sentence  = adjective* noun verb (adjective+ noun)? EOF
     adjective = 'red' / 'peculiar' /  'jumping' / 'fat' / 'fuzzy'
     noun      = 'birds' / 'dogs' / 'worms' / 'donkeys' / 'geese' / 'cats'
     verb      = 'hate' / 'trip' / 'love' / 'bite'
@@ -13,7 +13,7 @@ peg = '''
 def main():
     parser = ParserPEG(peg, 'sentence')
     try:
-        tree = parser.parse('fuzzy birds love fat worms')
+        tree = parser.parse('red fuzzy peculiar birds love fat jumping worms')
         print(tree.tree_str())
     except NoMatch as e:
         print(e)
