@@ -1,0 +1,5 @@
+//# Gramática del lenguaje delta
+
+program = expression EOF
+expression = decimal
+decimal = r'\d+'
