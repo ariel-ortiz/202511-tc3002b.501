@@ -3,6 +3,6 @@
   (func
     (export "_start")
     (result i32)
-    i32.const 2147483647
+    i32.const 1
   )
 )

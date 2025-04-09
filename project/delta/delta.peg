@@ -1,5 +1,6 @@
 //# Gramática del lenguaje delta
 
 program = expression EOF
-expression = decimal
+expression = decimal / boolean
 decimal = r'\d+'
+boolean = 'true' / 'false'
