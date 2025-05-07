@@ -18,7 +18,27 @@ class CodeGenerationVisitor(PTNodeVisitor):
         self.__symbol_table = symbol_table
 
     def visit_program(self, node, children):
-        return CodeGenerationVisitor.WAT_TEMPLATE.format(children[0])
+
+        def declare_variable():
+            return ''.join([f'    (local ${var_name} i32)\n'
+                            for var_name in self.__symbol_table])
+
+        return CodeGenerationVisitor.WAT_TEMPLATE.format(
+            declare_variable()
+            + ''.join(children))
+
+    def visit_statement(self, node, children):
+        return children[0]
+
+    def visit_declaration(self, node, children):
+        return ''
+
+    def visit_assignment(self, node, children):
+        return children[1] + children[0]
+
+    def visit_lhs_variable(self, node, children):
+        name = node.value
+        return f'    local.set ${name}\n'
 
     def visit_expression(self, node, children):
         result = [children[0]]
@@ -71,3 +91,7 @@ class CodeGenerationVisitor(PTNodeVisitor):
 
     def visit_parenthesis(self, node, children):
         return children[0]
+
+    def visit_rhs_variable(self, node, children):
+        name = node.value
+        return f'    local.get ${name}\n'
