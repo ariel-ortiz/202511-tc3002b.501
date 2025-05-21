@@ -40,6 +40,22 @@ class CodeGenerationVisitor(PTNodeVisitor):
         name = node.value
         return f'    local.set ${name}\n'
 
+    def visit_if(self, node, children):
+        result = (
+            children[0]
+            + '    if\n'
+            + children[1])
+        if len(children) == 3:
+            result += (
+                '    else\n'
+                + children[2]
+            )
+        result += '    end\n'
+        return result
+
+    def visit_block(self, node, children):
+        return ''.join(children)
+
     def visit_expression(self, node, children):
         result = [children[0]]
         for i in range(1, len(children), 2):

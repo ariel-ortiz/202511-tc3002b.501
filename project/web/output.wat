@@ -3,25 +3,55 @@
   (func
     (export "_start")
     (result i32)
-    (local $x i32)
-    (local $y i32)
-    (local $z i32)
-    i32.const 2
-    local.set $x
-    local.get $x
+    (local $a i32)
+    (local $b i32)
+    (local $c i32)
     i32.const 1
-    i32.add
+    local.set $a
+    i32.const 2
+    local.set $b
     i32.const 3
-    i32.mul
-    local.set $y
-    local.get $y
+    local.set $c
+    i32.const 0
     i32.const 1
     i32.sub
-    local.set $z
-    local.get $x
-    local.get $y
+    local.get $a
     i32.add
-    local.get $z
+    local.get $b
+    i32.add
+    local.get $c
+    i32.sub
+    if
+    local.get $a
+    i32.const 2
+    i32.mul
+    local.set $a
+    local.get $b
+    i32.const 3
+    i32.mul
+    local.set $b
+    local.get $c
+    i32.const 4
+    i32.mul
+    local.set $c
+    else
+    local.get $a
+    i32.const 5
+    i32.mul
+    local.set $a
+    local.get $b
+    i32.const 6
+    i32.mul
+    local.set $b
+    local.get $c
+    i32.const 7
+    i32.mul
+    local.set $c
+    end
+    local.get $a
+    local.get $b
+    i32.add
+    local.get $c
     i32.add
   )
 )
